@@ -1,0 +1,26 @@
+{
+  "name": "blog_nodejs_express_mysql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phuocdt23/Blog_Nodejs_Express_Mysql.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phuocdt23/Blog_Nodejs_Express_Mysql/issues"
+  },
+  "homepage": "https://github.com/phuocdt23/Blog_Nodejs_Express_Mysql#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.15"
+  }
+}
