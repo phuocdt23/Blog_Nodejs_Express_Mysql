@@ -8,12 +8,35 @@ router.get("/", function (req, res) {
 });
 
 router.get("/posts", async function (req, res) {
-    const query = `
+  const query = `
         SELECT posts.*, authors.name AS author_name FROM posts
         INNER JOIN authors ON posts.author_id = authors.id 
     `;
-    const [posts] = await db.query(query);
-  res.render("posts-list", {posts: posts});
+  const [posts] = await db.query(query);
+  res.render("posts-list", { posts: posts });
+});
+
+router.get("/posts/:id", async function (req, res) {
+  const query = `
+    SELECT posts.*, authors.name AS author_name, authors.email AS author_email 
+    FROM posts 
+    INNER JOIN authors ON posts.author_id = authors.id
+    WHERE authors.id = ?`;
+  const [posts] = await db.query(query, [req.params.id]);
+
+  if (!posts || posts.length === 0) {
+    return res.status(404).render("404");
+  }
+  const postData = {
+    ...posts[0],
+      humanReadableDate: posts[0].date.toLocaleString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+  };
+  res.render("post-detail", { post: postData });
 });
 
 router.post("/posts", async function (req, res) {
