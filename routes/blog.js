@@ -1,4 +1,5 @@
 const express = require("express");
+const { redirect } = require("express/lib/response");
 
 const db = require("../data/database");
 const router = express.Router();
@@ -69,6 +70,7 @@ router.get('/posts/:id/edit', async function(req, res)  {
   const [posts] = await db.query(query, [req.params.id]);
   res.render('update-post', { post : posts[0]});
 });
+
 router.post('/posts/:id/edit', async function (req, res){
   const query = `
   UPDATE posts SET title = ?, summary = ?, body = ?
@@ -76,6 +78,12 @@ router.post('/posts/:id/edit', async function (req, res){
   `;
   await db.query(query, [req.body.title, req.body.summary, req.body.title, req.params.id]);
   res.redirect('/posts');
-})
+});
+
+router.post('/posts/:id/delete', async function(req, res) {
+  const [result] = await db.query('DELETE FROM posts WHERE id = ?', [req.params.id]);
+  console.log(result);
+  res.redirect('/posts');
+});
 
 module.exports = router;
